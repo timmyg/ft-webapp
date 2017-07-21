@@ -28,7 +28,7 @@ class Movies extends React.Component {
       </div>
       <div className="Movies-list">
         { movies.length > 0 ? movies.map(({ id, year, rated, plot, poster }) => (
-          <Panel header={`- ${year}`}>
+          <Panel key={ id } header={`${id} - ${year}`}>
             <Row>
               <Col xs={ 12 } sm={ 3 }>
                 <Image src={ `http://d2c3kiufvhjdfg.cloudfront.net/Pics/${id}a.JPG` } alt={ id } responsive />
