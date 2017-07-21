@@ -14,6 +14,7 @@ Meteor.publish('movies.search', (searchTerm) => {
     const regex = new RegExp(searchTerm, 'i');
 
     query = {
+      "auction.end" : { $gte : new Date() },
       $or: [
         { description: regex },
         { year: regex },

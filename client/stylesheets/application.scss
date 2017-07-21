@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Zilla+Slab');
+
 @import "base/extends";
 @import "base/animations";
 @import "base/forms";
@@ -9,3 +11,7 @@
 @import "module/MovieSearch";
 
 @import "state/Navbar";
+
+* {
+  font-family: 'Zilla Slab', serif;
+}

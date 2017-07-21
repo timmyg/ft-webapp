@@ -27,19 +27,23 @@ class Movies extends React.Component {
         />
       </div>
       <div className="Movies-list">
-        { movies.length > 0 ? movies.map(({ id, year, rated, plot, poster }) => (
-          <Panel key={ id } header={`${id} - ${year}`}>
-            <Row>
-              <Col xs={ 12 } sm={ 3 }>
-                <Image src={ `http://d2c3kiufvhjdfg.cloudfront.net/Pics/${id}a.JPG` } alt={ id } responsive />
-              </Col>
-              <Col xs={ 12 } sm={ 9 }>
-                <p><strong>Rated:</strong> { rated }</p>
-                <p>{ plot }</p>
-              </Col>
-            </Row>
-          </Panel>
-        )) : <Alert>Sorry, goober. No movies found for '{ this.state.searchTerm }.'</Alert> }
+        { movies.length > 0 ? movies.map(({ id, msrp, link, auctionUrl, description, endDate }) => (
+          <Col key={ id } xs={ 12 } sm={ 6 }>
+            <Panel header={`${description}`}>
+                <Row>
+                  <Col xs={ 12 } sm={ 3 }>
+                    <Image src={ `http://d2c3kiufvhjdfg.cloudfront.net/Pics/${id}a.JPG` } alt={ id } responsive />
+                  </Col>
+                  <Col xs={ 12 } sm={ 9 }>
+                    <p><strong>id:</strong> { id }</p>
+                    <p><strong>msrp:</strong> { msrp }</p>
+                    <p><strong>description:</strong> { description }</p>
+                    <p><a href={ link } target="_blank">view</a></p>
+                  </Col>
+                </Row>
+            </Panel>
+          </Col>
+        )) : <Alert>Sorry. No items found for '{ this.state.searchTerm }.'</Alert> }
       </div>
     </div>);
   }

@@ -18,23 +18,27 @@ Movies.deny({
 const MoviesSchema = new SimpleSchema({
   id: {
     type: String,
-    label: 'The title of the movie.',
+    label: '',
   },
-  year: {
-    type: String,
-    label: 'The year the movie was released.',
+  msrp: {
+    type: Number,
+    label: '',
   },
-  rated: {
+  link: {
     type: String,
-    label: 'The rating for the movie.',
+    label: '',
   },
-  plot: {
+  "auction.url": {
     type: String,
-    label: 'The plot of the movie.',
+    label: '',
   },
-  poster: {
+  description: {
     type: String,
-    label: 'The poster image for the movie.',
+    label: '',
+  },
+  "auction.end": {
+    type: Date,
+    label: '',
   },
 });
 
