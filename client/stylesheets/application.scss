@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Zilla+Slab');
+@import url('https://fonts.googleapis.com/css?family=Poiret+One');
 
 @import "base/extends";
 @import "base/animations";
@@ -14,4 +15,8 @@
 
 * {
   font-family: 'Zilla Slab', serif;
+}
+
+.fancy-font {
+  font-family: 'Poiret One', cursive;
 }

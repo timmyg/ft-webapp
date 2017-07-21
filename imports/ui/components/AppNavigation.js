@@ -6,7 +6,7 @@ const AppNavigation = () => (
   <Navbar>
     <Navbar.Header>
       <Navbar.Brand>
-        <Link to="/">Search Fasttrack</Link>
+        <Link to="/" className="fancy-font">Searchtrack</Link>
       </Navbar.Brand>
       <Navbar.Toggle />
     </Navbar.Header>

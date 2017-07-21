@@ -17,15 +17,17 @@ class Movies extends React.Component {
   render() {
     const { movies } = this.props;
     return (<div className="Movies">
-      <div className="MovieSearch">
-        <i className="fa fa-search" />
-        <FormControl
-          type="search"
-          onKeyUp={ this.handleSearch }
-          placeholder="What do you want to watch?"
-          className="Search"
-        />
-      </div>
+      <Col xs={ 12 }>
+        <div className="MovieSearch">
+          <i className="fa fa-search" />
+          <FormControl
+            type="search"
+            onKeyUp={ this.handleSearch }
+            placeholder="What do you want to buy?"
+            className="Search"
+          />
+        </div>
+      </Col>
       <div className="Movies-list">
         { movies.length > 0 ? movies.map(({ id, msrp, link, auctionUrl, description, endDate }) => (
           <Col key={ id } xs={ 12 } sm={ 6 }>
