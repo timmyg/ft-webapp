@@ -28,17 +28,28 @@ const MoviesSchema = new SimpleSchema({
     type: String,
     label: '',
   },
-  "auction.url": {
-    type: String,
-    label: '',
-  },
   description: {
     type: String,
     label: '',
   },
-  "auction.end": {
-    type: Date,
+  additionalInfo: {
+    type: String,
     label: '',
+  },
+  brand: {
+    type: String,
+    label: '',
+  },
+  model: {
+    type: String,
+    label: '',
+  },
+  specs: {
+    type: String,
+    label: '',
+  },
+  auction: {
+    type: Object,
   },
 });
 

@@ -3,6 +3,8 @@
 import React from 'react';
 import { FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 import documentEditor from '../../modules/document-editor.js';
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 export default class DocumentEditor extends React.Component {
   componentDidMount() {

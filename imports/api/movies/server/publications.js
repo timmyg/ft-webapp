@@ -7,24 +7,20 @@ import { Movies } from '../movies.js';
 Meteor.publish('movies.search', (searchTerm) => {
   check(searchTerm, Match.OneOf(String, null, undefined));
 
-  let query = {};
-  const projection = { limit: 10, sort: { title: 1 } };
+  let query = {"auction.end" : { $gte : new Date() }};
+  const projection = { limit: 10, sort: { 'auction.end': 1 } };
 
   if (searchTerm) {
     const regex = new RegExp(searchTerm, 'i');
-
-    query = {
-      "auction.end" : { $gte : new Date() },
-      $or: [
+    query['$or'] = [
         { description: regex },
-        { year: regex },
-        { rated: regex },
-        { plot: regex },
-      ],
-    };
-
+        { brand: regex },
+        { model: regex },
+        { specs: regex },
+      ];
     projection.limit = 100;
   }
 
+  console.log(query, projection);
   return Movies.find(query, projection);
 });
