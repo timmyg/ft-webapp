@@ -24,3 +24,7 @@ Meteor.publish('movies.search', (searchTerm) => {
   console.log(query, projection);
   return Movies.find(query, projection);
 });
+
+Meteor.publish('locations', () => {
+  Auctions.distinct( "location" );
+});

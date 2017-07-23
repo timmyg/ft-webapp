@@ -2,18 +2,19 @@ import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 export const Movies = new Mongo.Collection('items');
-
-Movies.allow({
-  insert: () => false,
-  update: () => false,
-  remove: () => false,
-});
-
-Movies.deny({
-  insert: () => true,
-  update: () => true,
-  remove: () => true,
-});
+export const Auctions = new Mongo.Collection('auctions');
+//
+// Movies.allow({
+//   insert: () => false,
+//   update: () => false,
+//   remove: () => false,
+// });
+//
+// Movies.deny({
+//   insert: () => true,
+//   update: () => true,
+//   remove: () => true,
+// });
 
 const MoviesSchema = new SimpleSchema({
   id: {
@@ -53,4 +54,24 @@ const MoviesSchema = new SimpleSchema({
   },
 });
 
+const AuctionsSchema = new SimpleSchema({
+  id: {
+    type: String,
+    label: '',
+  },
+  url: {
+    type: String,
+    label: '',
+  },
+  end: {
+    type: Date,
+    label: '',
+  },
+  location: {
+    type: String,
+    label: '',
+  },
+});
+
 Movies.attachSchema(MoviesSchema);
+Auctions.attachSchema(AuctionsSchema);

@@ -33,6 +33,12 @@ class Movies extends React.Component {
         </div>
       </Col>
       <div className="Movies-list">
+        <Row className="text-center">
+          <span>
+            Results: {movies.length}
+          </span>
+        </Row>
+        <br/>
         { movies.length > 0 ? movies.map(({ id, msrp, link, description, additionalInfo, brand, model, specs, auction }) => (
           <Col key={ id } xs={ 12 } sm={ 6 }>
             <Panel header={`${description}`}>
@@ -70,6 +76,7 @@ class Movies extends React.Component {
 Movies.propTypes = {
   movies: React.PropTypes.array,
   searchQuery: React.PropTypes.object,
+  locations: React.PropTypes.object,
 };
 
 export default Movies;
