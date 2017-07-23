@@ -54,24 +54,24 @@ const MoviesSchema = new SimpleSchema({
   },
 });
 
-const AuctionsSchema = new SimpleSchema({
-  id: {
-    type: String,
-    label: '',
-  },
-  url: {
-    type: String,
-    label: '',
-  },
-  end: {
-    type: Date,
-    label: '',
-  },
-  location: {
-    type: String,
-    label: '',
-  },
-});
+// const AuctionsSchema = new SimpleSchema({
+//   id: {
+//     type: String,
+//     label: '',
+//   },
+//   url: {
+//     type: String,
+//     label: '',
+//   },
+//   end: {
+//     type: Date,
+//     label: '',
+//   },
+//   location: {
+//     type: String,
+//     label: '',
+//   },
+// });
 
 Movies.attachSchema(MoviesSchema);
-Auctions.attachSchema(AuctionsSchema);
+// Auctions.attachSchema(AuctionsSchema);

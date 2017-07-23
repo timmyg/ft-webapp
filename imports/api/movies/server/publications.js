@@ -3,6 +3,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check, Match } from 'meteor/check';
 import { Movies } from '../movies.js';
+import _ from 'underscore';
 
 Meteor.publish('movies.search', (searchTerm) => {
   check(searchTerm, Match.OneOf(String, null, undefined));
@@ -21,10 +22,5 @@ Meteor.publish('movies.search', (searchTerm) => {
     projection.limit = 100;
   }
 
-  console.log(query, projection);
   return Movies.find(query, projection);
-});
-
-Meteor.publish('locations', () => {
-  Auctions.distinct( "location" );
 });

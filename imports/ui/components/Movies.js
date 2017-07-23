@@ -1,13 +1,17 @@
 import React from 'react';
 import { Alert, Row, Col, Panel, FormControl, Image, Button } from 'react-bootstrap';
-import Moment  from 'react-moment';
+import Moment from 'react-moment';
 
 class Movies extends React.Component {
   constructor(props) {
-    console.log(props);
     super(props);
+    this.locations = ["broadwellX", "schoolX", "waycrossX", "seymourX", "offsiteX", "mcmann"]
     this.state = { searchTerm: null };
     this.handleSearch = this.handleSearch.bind(this);
+    // Meteor.call('getLocations', function(err, locationsArray) {
+    //   this.locations = locationsArray;
+    //   console.log(locationsArray);
+    // });
   }
 
   handleSearch(event) {
@@ -17,9 +21,7 @@ class Movies extends React.Component {
   }
 
   render() {
-    const { movies } = this.props;
-    console.log(movies);
-    console.log(this.props.movies.children);
+    const { locations, movies } = this.props;
     return (<div className="Movies">
       <Col xs={ 12 }>
         <div className="MovieSearch">
@@ -31,6 +33,13 @@ class Movies extends React.Component {
             className="Search"
           />
         </div>
+      </Col>
+      <Col xs={ 12 }>
+        { locations && locations.length > 0 ? locations.forEach((location) => {
+          <h6>
+            { location }
+          </h6>
+        }) : null }
       </Col>
       <div className="Movies-list">
         <Row className="text-center">
@@ -76,7 +85,7 @@ class Movies extends React.Component {
 Movies.propTypes = {
   movies: React.PropTypes.array,
   searchQuery: React.PropTypes.object,
-  locations: React.PropTypes.object,
+  locations: React.PropTypes.array,
 };
 
 export default Movies;
