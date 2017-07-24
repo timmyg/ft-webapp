@@ -1,27 +1,48 @@
 import React from 'react';
-import { Alert, Row, Col, Panel, FormControl, Image, Button } from 'react-bootstrap';
+import { Alert, Row, Checkbox, Col, Panel, FormControl, Image, Button } from 'react-bootstrap';
 import Moment from 'react-moment';
+var typingTimeout = null;
 
 class Movies extends React.Component {
   constructor(props) {
     super(props);
-    this.locations = ["broadwellX", "schoolX", "waycrossX", "seymourX", "offsiteX", "mcmann"]
-    this.state = { searchTerm: null };
+    this.state = {
+      searchTerm: null,
+      locations: null
+    };
+    const cxt = this;
     this.handleSearch = this.handleSearch.bind(this);
-    // Meteor.call('getLocations', function(err, locationsArray) {
-    //   this.locations = locationsArray;
-    //   console.log(locationsArray);
-    // });
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleInputChange(event) {
+    console.log("handleInputChange", event);
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    debugger
+
+    this.setState({
+     [name]: value
+    });
   }
 
   handleSearch(event) {
+    clearTimeout(typingTimeout);
+    let context = this;
     const searchTerm = event.target.value;
-    this.setState({ searchTerm });
-    this.props.searchQuery.set(searchTerm);
+    typingTimeout = setTimeout(function () {
+      context.setState({ searchTerm: searchTerm });
+      context.props.searchQuery.set(searchTerm);
+    }, 500);
   }
 
   render() {
+    var context = this;
     const { locations, movies } = this.props;
+    Meteor.call('getLocations', function(err, locationsArray) {
+      context.setState({locations: locationsArray});
+    });
     return (<div className="Movies">
       <Col xs={ 12 }>
         <div className="MovieSearch">
@@ -35,11 +56,11 @@ class Movies extends React.Component {
         </div>
       </Col>
       <Col xs={ 12 }>
-        { locations && locations.length > 0 ? locations.forEach((location) => {
-          <h6>
-            { location }
-          </h6>
-        }) : null }
+        <ul className="list-inline">
+          { this.state.locations && this.state.locations.length > 0 ? this.state.locations.map(function(name, index){
+            return <li key={ index }><Checkbox onChange={ this.handleInputChange }>{ name }</Checkbox></li>
+          }): null }
+        </ul>
       </Col>
       <div className="Movies-list">
         <Row className="text-center">
