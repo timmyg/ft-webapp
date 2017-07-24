@@ -8,11 +8,15 @@ class Movies extends React.Component {
     super(props);
     this.state = {
       searchTerm: null,
-      locations: null
+      locations: [3,4,5]
     };
     const cxt = this;
     this.handleSearch = this.handleSearch.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+
+    Meteor.call('getLocations', function(err, locationsArray) {
+      cxt.setState({locations: locationsArray});
+    });
   }
 
   handleInputChange(event) {
@@ -40,9 +44,6 @@ class Movies extends React.Component {
   render() {
     var context = this;
     const { locations, movies } = this.props;
-    Meteor.call('getLocations', function(err, locationsArray) {
-      context.setState({locations: locationsArray});
-    });
     return (<div className="Movies">
       <Col xs={ 12 }>
         <div className="MovieSearch">
