@@ -7,12 +7,7 @@ import _ from 'underscore';
 
 Meteor.publish('movies.search', (searchTerm, locationsArray) => {
   check(searchTerm, Match.OneOf(String, null, undefined));
-  check(locationsArray, Match.Maybe([String]));
-
-  // console.log('locationsArray', typeof locationsArray, locationsArray, locationsArray.length);
-  // locationsArray = JSON.stringify(locationsArray);
-  // console.log('locationsArray', typeof locationsArray, locationsArray, locationsArray.length);
-
+  check(locationsArray, Match.OneOf([String], null, undefined));
 
   let query = {
     "auction.end" : {
@@ -23,6 +18,7 @@ Meteor.publish('movies.search', (searchTerm, locationsArray) => {
     query["auction.location"] = {};
     query["auction.location"]["$in"] = locationsArray;
   }
+
   const projection = { limit: 10, sort: { 'auction.end': 1 } };
 
   if (searchTerm) {

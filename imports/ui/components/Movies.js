@@ -71,18 +71,17 @@ class Movies extends React.Component {
           />
         </div>
       </Col>
-      <Col xs={ 12 }>
-        {this.state.setComp}
+      <Col xs={ 12 } md={ 8 } className="locations">
+          Filter by Locations:&nbsp;&nbsp;{ outputCheckboxes }
       </Col>
-      <Col xs={ 12 } className="locations">
-          { outputCheckboxes }
-      </Col>
-      <div className="Movies-list">
-        <Row className="text-center">
+      <Col xs={ 12 } md={ 4 } className="results-length">
+        <Row className="text-right">
           <span>
             Results: {movies.length}
           </span>
         </Row>
+      </Col>
+      <div className="Movies-list">
         <br/>
         { movies.length > 0 ? movies.map(({ id, msrp, link, description, additionalInfo, brand, model, specs, auction }) => (
           <Col key={ id } xs={ 12 } sm={ 6 }>
