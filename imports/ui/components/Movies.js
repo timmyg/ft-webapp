@@ -14,26 +14,27 @@ class Movies extends React.Component {
     const cxt = this;
     this.context = cxt;
     this.handleSearch = this.handleSearch.bind(this);
-    // this.handleInputChange = this.handleInputChange.bind(this);
 
     Meteor.call('getLocations', function(err, locationsArray) {
-      var arr = [];
-      // locationsArray.forEach(l => {
-        // l.state = {isChecked: false};
-        // l.setState({isChecked: false});
-        // cxt.handleChecked = cxt.handleChecked.bind(this);
-      // })
       cxt.setState({locations: locationsArray});
     });
   }
 
   changeEvent(e) {
-    console.log("changeEvent", e, this.state.isChecked);
+    console.log("changeEvent", e.target.value, e.target.checked);
+    let checkedArray = this.state.optionsChecked;
+    let selectedValue = event.target.value;
+    debugger
+    if (e.target.checked === true) {
+    	checkedArray.push(selectedValue);
+      this.setState({ optionsChecked: checkedArray });
+    } else {
+    	let valueIndex = checkedArray.indexOf(selectedValue);
+	    checkedArray.splice(valueIndex, 1);
+      this.setState({ optionsChecked: checkedArray });
+    }
+    console.log(this.state.optionsChecked);
   }
-
-  // handleInputChange(event) {
-  //   this.setState({isChecked: !this.state.isChecked});
-  // }
 
   handleSearch(event) {
     clearTimeout(typingTimeout);
@@ -116,7 +117,8 @@ Movies.propTypes = {
   movies: React.PropTypes.array,
   searchQuery: React.PropTypes.object,
   locations: React.PropTypes.array,
-  setComp: React.PropTypes.object,
+  // setComp: React.PropTypes.object,
+  optionsChecked: React.PropTypes.array,
 };
 //
 
