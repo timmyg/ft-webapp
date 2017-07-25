@@ -6,13 +6,14 @@ import MoviesList from '../components/Movies.js';
 import { Loading } from '../components/Loading.js';
 
 const searchQuery = new ReactiveVar(null);
+const optionsChecked2 = new ReactiveVar([]);
 
 const composer = (props, onData) => {
-  const subscription = Meteor.subscribe('movies.search', searchQuery.get());
+  const subscription = Meteor.subscribe('movies.search', searchQuery.get(), optionsChecked2.get());
 
   if (subscription.ready()) {
     const movies = Movies.find().fetch();
-    onData(null, { movies, searchQuery });
+    onData(null, { movies, searchQuery, optionsChecked2 });
   }
 };
 

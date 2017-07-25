@@ -9,7 +9,7 @@ class Movies extends React.Component {
     this.state = {
       searchTerm: null,
       locations: null,
-      optionsChecked: []
+      optionsChecked1: []
     };
     const cxt = this;
     this.context = cxt;
@@ -22,17 +22,21 @@ class Movies extends React.Component {
 
   changeEvent(e) {
     console.log("changeEvent", e.target.value, e.target.checked);
-    let checkedArray = this.state.optionsChecked;
+    let checkedArray = this.props.optionsChecked2.get();
     let selectedValue = e.target.value;
     if (e.target.checked) {
     	checkedArray.push(selectedValue);
-      this.setState({ optionsChecked: checkedArray });
+      this.setState({ optionsChecked1: checkedArray });
+      this.props.optionsChecked2.set(checkedArray);
     } else {
     	let valueIndex = checkedArray.indexOf(selectedValue);
 	    checkedArray.splice(valueIndex, 1);
-      this.setState({ optionsChecked: checkedArray });
+      this.setState({ optionsChecked1: checkedArray });
+      this.props.optionsChecked2.set(checkedArray);
     }
-    console.log(this.state.optionsChecked);
+    console.log(this);
+    // TODO update subscription
+
   }
 
   handleSearch(event) {
@@ -118,8 +122,7 @@ Movies.propTypes = {
   movies: React.PropTypes.array,
   searchQuery: React.PropTypes.object,
   locations: React.PropTypes.array,
-  // setComp: React.PropTypes.object,
-  optionsChecked: React.PropTypes.array,
+  optionsChecked2: React.PropTypes.object,
 };
 //
 
