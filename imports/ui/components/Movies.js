@@ -23,9 +23,8 @@ class Movies extends React.Component {
   changeEvent(e) {
     console.log("changeEvent", e.target.value, e.target.checked);
     let checkedArray = this.state.optionsChecked;
-    let selectedValue = event.target.value;
-    debugger
-    if (e.target.checked === true) {
+    let selectedValue = e.target.value;
+    if (e.target.checked) {
     	checkedArray.push(selectedValue);
       this.setState({ optionsChecked: checkedArray });
     } else {
@@ -51,7 +50,9 @@ class Movies extends React.Component {
     const { locations, movies } = this.props;
     let outputCheckboxes = this.state.locations && this.state.locations.length > 0 ? this.state.locations.map(function(name, i){
       return (
-        <span key={ name }><Checkbox value={name} id={'string_' + i} onChange={this.changeEvent.bind(this)} /><label htmlFor={'string_' + i}>{name}</label></span>
+        <span key={ name }>
+          <Checkbox value={name} id={'string_' + i} onChange={this.changeEvent.bind(this)}>{ name }</Checkbox>
+        </span>
       )}, this): null
 
     return (<div className="Movies">
@@ -69,7 +70,7 @@ class Movies extends React.Component {
       <Col xs={ 12 }>
         {this.state.setComp}
       </Col>
-      <Col xs={ 12 }>
+      <Col xs={ 12 } className="locations">
           { outputCheckboxes }
       </Col>
       <div className="Movies-list">
