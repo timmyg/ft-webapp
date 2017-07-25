@@ -8,28 +8,32 @@ class Movies extends React.Component {
     super(props);
     this.state = {
       searchTerm: null,
-      locations: [3,4,5]
+      locations: null,
+      optionsChecked: []
     };
     const cxt = this;
+    this.context = cxt;
     this.handleSearch = this.handleSearch.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
+    // this.handleInputChange = this.handleInputChange.bind(this);
 
     Meteor.call('getLocations', function(err, locationsArray) {
+      var arr = [];
+      // locationsArray.forEach(l => {
+        // l.state = {isChecked: false};
+        // l.setState({isChecked: false});
+        // cxt.handleChecked = cxt.handleChecked.bind(this);
+      // })
       cxt.setState({locations: locationsArray});
     });
   }
 
-  handleInputChange(event) {
-    console.log("handleInputChange", event);
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-    debugger
-
-    this.setState({
-     [name]: value
-    });
+  changeEvent(e) {
+    console.log("changeEvent", e, this.state.isChecked);
   }
+
+  // handleInputChange(event) {
+  //   this.setState({isChecked: !this.state.isChecked});
+  // }
 
   handleSearch(event) {
     clearTimeout(typingTimeout);
@@ -44,6 +48,11 @@ class Movies extends React.Component {
   render() {
     var context = this;
     const { locations, movies } = this.props;
+    let outputCheckboxes = this.state.locations && this.state.locations.length > 0 ? this.state.locations.map(function(name, i){
+      return (
+        <span key={ name }><Checkbox value={name} id={'string_' + i} onChange={this.changeEvent.bind(this)} /><label htmlFor={'string_' + i}>{name}</label></span>
+      )}, this): null
+
     return (<div className="Movies">
       <Col xs={ 12 }>
         <div className="MovieSearch">
@@ -57,11 +66,10 @@ class Movies extends React.Component {
         </div>
       </Col>
       <Col xs={ 12 }>
-        <ul className="list-inline">
-          { this.state.locations && this.state.locations.length > 0 ? this.state.locations.map(function(name, index){
-            return <li key={ index }><Checkbox onChange={ this.handleInputChange }>{ name }</Checkbox></li>
-          }): null }
-        </ul>
+        {this.state.setComp}
+      </Col>
+      <Col xs={ 12 }>
+          { outputCheckboxes }
       </Col>
       <div className="Movies-list">
         <Row className="text-center">
@@ -108,6 +116,8 @@ Movies.propTypes = {
   movies: React.PropTypes.array,
   searchQuery: React.PropTypes.object,
   locations: React.PropTypes.array,
+  setComp: React.PropTypes.object,
 };
+//
 
 export default Movies;
