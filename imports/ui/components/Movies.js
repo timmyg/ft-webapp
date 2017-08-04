@@ -14,10 +14,17 @@ class Movies extends React.Component {
     const cxt = this;
     this.context = cxt;
     this.handleSearch = this.handleSearch.bind(this);
+    this.clearBox = this.clearBox.bind(this);
 
     Meteor.call('getLocations', function(err, locationsArray) {
       cxt.setState({locations: locationsArray});
     });
+  }
+
+  clearBox(e) {
+    this.setState({ searchTerm: "" });
+    this.props.searchQuery.set("");
+    document.getElementById("search").value = "";
   }
 
   changeEvent(e) {
@@ -64,13 +71,15 @@ class Movies extends React.Component {
     return (<div className="Movies">
       <Col xs={ 12 }>
         <div className="MovieSearch">
-          <i className="fa fa-search" />
+          <i className="fa fa-search left" />
           <FormControl
+            id="search"
             type="search"
             onKeyUp={ this.handleSearch }
             placeholder="What do you want to buy?"
             className="Search"
           />
+          <i className="fa fa-close right hand" onClick={this.clearBox.bind(this)}/>
         </div>
       </Col>
       <Col xs={ 12 } md={ 8 } className="locations">
@@ -99,7 +108,7 @@ class Movies extends React.Component {
                     {msrp ? <p><strong>brand:</strong> { brand }</p> : null}
                     {msrp ? <p><strong>model:</strong> { model }</p> : null}
                     {msrp ? <p><strong>specs:</strong> { specs }</p> : null}
-                    {description ? <p><strong>amazon:</strong> <a href={ `https://www.amazon.com/s/?url=search-alias%3Daps&field-keywords=${description}` } target="_blank">amazon</a></p> : null}
+                    {description ? <p><strong>amazon:</strong> <a href={ `https://www.amazon.com/s?url=search-alias%3Daps&field-keywords=${description}` } target="_blank">amazon</a></p> : null}
                     <p><strong>state:</strong> { additionalInfo }</p>
                     <p><strong>ending:</strong>
                       &nbsp;<Moment fromNow>{ auction.end }</Moment>
@@ -114,7 +123,7 @@ class Movies extends React.Component {
                 </Row>
             </Panel>
           </Col>
-        )) : <Alert>Sorry. No items found for '{ this.state.searchTerm }.'</Alert> }
+        )) : <Col xs={ 10 } xsOffset={1} sm={ 6 } xsOffset={3}><Alert>Sorry. No items found for '{ this.state.searchTerm }.'</Alert></Col> }
       </div>
     </div>);
   }
