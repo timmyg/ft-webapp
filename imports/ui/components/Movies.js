@@ -55,7 +55,9 @@ class Movies extends React.Component {
     let outputCheckboxes = this.state.locations && this.state.locations.length > 0 ? this.state.locations.map(function(name, i){
       return (
         <span key={ name }>
-          <Checkbox value={name} id={'string_' + i} onChange={this.changeEvent.bind(this)}>{ name }</Checkbox>
+          <Checkbox value={name} id={'string_' + i} onChange={this.changeEvent.bind(this)}>
+            <span className={`${name} label`}>{ name }</span>
+          </Checkbox>
         </span>
       )}, this): null
 
@@ -75,11 +77,11 @@ class Movies extends React.Component {
           Filter by Locations:&nbsp;&nbsp;{ outputCheckboxes }
       </Col>
       <Col xs={ 12 } md={ 4 } className="results-length">
-        <Row className="text-right">
+        <div className="text-right">
           <span>
             Results: {movies.length}
           </span>
-        </Row>
+        </div>
       </Col>
       <div className="Movies-list">
         <br/>
@@ -91,7 +93,7 @@ class Movies extends React.Component {
                     <Image src={ `http://d2c3kiufvhjdfg.cloudfront.net/Pics/${id}a.JPG` } alt={ id } responsive />
                   </Col>
                   <Col xs={ 12 } sm={ 7 }>
-                    <p><strong>location:</strong> { auction.location }</p>
+                    <p><strong>location:</strong> <span className={`${ auction.location }`}>{ auction.location }</span></p>
                     {msrp ? <p><strong>msrp:</strong> { msrp }</p> : null}
                     <p><strong>description:</strong> { description }</p>
                     {msrp ? <p><strong>brand:</strong> { brand }</p> : null}

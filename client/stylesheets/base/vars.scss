@@ -1,0 +1,21 @@
+$locations: (
+  broadwell: #00C853, // green
+  school: #4DB6AC, // turquoise
+  waycross: #8E24AA, // purp
+  seymour: #2196F3, // blue
+  mcmann: #FFA726, // orange
+);
+
+@each $location, $color in $locations {
+  // location selection checkboxes
+  input[type=checkbox]:checked ~ span.label.#{$location} {
+    background: $color;
+    color: white;
+  }
+
+  // text color
+  span.#{$location}:not(.label) {
+    color: $color;
+  }
+
+}

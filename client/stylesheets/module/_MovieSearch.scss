@@ -1,3 +1,5 @@
+@import '../base/vars';
+
 .Movies {
   .MovieSearch {
     position: relative;
@@ -20,6 +22,15 @@
     .checkbox {
       margin-right: 10px;
       display: inline-block;
+    }
+
+    input[type=checkbox]{
+      visibility: hidden;
+    }
+
+    .label {
+      color: inherit;
+      font-size: inherit;
     }
   }
 }

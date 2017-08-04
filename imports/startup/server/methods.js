@@ -3,6 +3,7 @@ import { Auctions } from '../../api/movies/movies.js';
 
 Meteor.methods({
   getLocations() {
-    return _.uniq(_.pluck(Auctions.find().fetch(),"location"));
+    let locations = _.uniq(_.pluck(Auctions.find().fetch(),"location"));
+    return _.reject(locations, (l) => { return l == "offsite" })
   }
 });
