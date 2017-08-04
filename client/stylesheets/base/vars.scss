@@ -6,6 +6,7 @@ $locations: (
   mcmann: #FFA726, // orange
 
   pics: #546E7A, // greyblue
+  completed: #D32F2F, // red
 );
 
 @each $location, $color in $locations {

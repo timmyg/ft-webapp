@@ -1,13 +1,13 @@
 import React from 'react';
 import { Alert, Row, Checkbox, Col, Panel, FormControl, Image, Button } from 'react-bootstrap';
 import Moment from 'react-moment';
+import TextTruncate from 'react-text-truncate';
 var typingTimeout = null;
 
 class Movies extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchTerm: null,
       searchTerm: null,
       locations: null,
       optionsChecked1: []
@@ -57,6 +57,12 @@ class Movies extends React.Component {
     }, 500);
   }
 
+  toggleCompleted(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    this.props.completed.set(value);
+  }
+
   handleInputChangeDynamic(event) {
     console.log(event);
     const target = event.target;
@@ -81,10 +87,17 @@ class Movies extends React.Component {
       )}, this): null
 
     let otherCheckboxes = (
-        <span key="pics">
-          <Checkbox name="pics" value="pics" id="pics" onChange={this.handleInputChangeDynamic.bind(this)}>
-            <span className="pics label">Pictures Only</span>
-          </Checkbox>
+        <span>
+          <span key="pics">
+            <Checkbox name="pics" value="pics" id="pics" onChange={this.handleInputChangeDynamic.bind(this)}>
+              <span className="pics label">Pictures Only</span>
+            </Checkbox>
+          </span>
+          <span key="completed">
+            <Checkbox name="completed" value="completed" id="completed" onChange={this.toggleCompleted.bind(this)}>
+              <span className="completed label">Completed</span>
+            </Checkbox>
+          </span>
         </span>
       );
 
@@ -96,7 +109,7 @@ class Movies extends React.Component {
             id="search"
             type="search"
             onKeyUp={ this.handleSearch }
-            placeholder="What do you want to buy?"
+            placeholder="Search"
             className="Search"
           />
           <i className="fa fa-close right hand" onClick={this.clearBox.bind(this)}/>
@@ -115,41 +128,55 @@ class Movies extends React.Component {
           </span>
         </div>
       </Col>
-      <div className="Movies-list">
+      <div className="Movies-list pinteresty">
         <br/>
         { movies.length > 0 ? movies.map(({ id, msrp, link, description, additionalInfo, brand, model, specs, auction }) => (
-          <Col key={ id } xs={ 12 } sm={ 6 }>
+          <Col key={ id } xs={ 12 } md={ 6 } className="item">
             { this.state.pics ?
-              <a href={ link } target="_blank">
-                <Image src={ `http://d2c3kiufvhjdfg.cloudfront.net/Pics/${id}a.JPG` } alt={ id } responsive />
-              </a>
+              <Panel className="img-only">
+                <a href={ link } target="_blank">
+                  <Image src={ `http://d2c3kiufvhjdfg.cloudfront.net/Pics/${id}a.JPG` } alt={ id } responsive />
+                </a>
+              </Panel>
             : null }
             { !this.state.pics ?
-              <Panel header={`${description}`}>
-                  <Row>
-                      <Col xs={ 12 } sm={ 5 }>
-                          <Image src={ `http://d2c3kiufvhjdfg.cloudfront.net/Pics/${id}a.JPG` } alt={ id } responsive />
-                      </Col>
-                      <Col xs={ 12 } sm={ 7 }>
-                          <p><strong>location:</strong> <span className={`${ auction.location }`}>{ auction.location }</span></p>
-                          {msrp ? <p><strong>msrp:</strong> { msrp }</p> : null}
-                          <p><strong>description:</strong> { description }</p>
-                          {msrp ? <p><strong>brand:</strong> { brand }</p> : null}
-                          {msrp ? <p><strong>model:</strong> { model }</p> : null}
-                          {msrp ? <p><strong>specs:</strong> { specs }</p> : null}
-                          {description ? <p><strong>amazon:</strong> <a href={ `https://www.amazon.com/s?url=search-alias%3Daps&field-keywords=${description}` } target="_blank">amazon</a></p> : null}
-                          <p><strong>state:</strong> { additionalInfo }</p>
-                          <p><strong>ending:</strong>
-                            &nbsp;<Moment fromNow>{ auction.end }</Moment>
-                            <em>&nbsp;(<Moment format="M/DD h:mm">{ auction.end }</Moment>)</em>
-                          </p>
-                          <br/>
-                          <br/>
-                          <p>
-                            <a href={ link } target="_blank" className="pull-right btn btn-default">View</a>
-                          </p>
-                      </Col>
-                  </Row>
+              <Panel header={`${description}`} className="normal">
+                <Col>
+                    <Image src={ `http://d2c3kiufvhjdfg.cloudfront.net/Pics/${id}a.JPG` } alt={ id } />
+                    <p><strong>location:</strong> <span className={`${ auction.location }`}>{ auction.location }</span></p>
+                    {msrp ? <p><strong>msrp:</strong> { msrp }</p> : null}
+                    {description ? <p><strong>description:</strong> {
+                      <TextTruncate
+                          line={4}
+                          truncateText="..."
+                          text={description}
+                      />
+                    }</p> : null}
+                    {brand ? <p><strong>brand:</strong> {
+                      <TextTruncate
+                          line={4}
+                          truncateText="..."
+                          text={brand}
+                      />
+                    }</p> : null}
+                    {model ? <p><strong>model:</strong> {
+                      <TextTruncate
+                          line={4}
+                          truncateText="..."
+                          text={model}
+                      />
+                    }</p> : null}
+                    {description ? <p><strong>amazon:</strong> <a href={ `https://www.amazon.com/s?url=search-alias%3Daps&field-keywords=${description}` } target="_blank">amazon</a></p> : null}
+                    <p><strong>ending:</strong>
+                      &nbsp;<Moment fromNow>{ auction.end }</Moment>
+                      <em>&nbsp;(<Moment format="M/DD h:mm a">{ auction.end }</Moment>)</em>
+                    </p>
+                    <br/>
+                    <br/>
+                    <p>
+                      <a href={ link } target="_blank" className="pull-right btn btn-default">View</a>
+                    </p>
+                </Col>
               </Panel>
             : null }
           </Col>
@@ -162,6 +189,7 @@ class Movies extends React.Component {
 Movies.propTypes = {
   movies: React.PropTypes.array,
   searchQuery: React.PropTypes.object,
+  completed: React.PropTypes.object,
   locations: React.PropTypes.array,
   optionsChecked2: React.PropTypes.object,
 };

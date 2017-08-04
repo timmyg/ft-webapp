@@ -5,13 +5,22 @@ import { check, Match } from 'meteor/check';
 import { Movies } from '../movies.js';
 import _ from 'underscore';
 
-Meteor.publish('movies.search', (searchTerm, locationsArray) => {
+Meteor.publish('movies.search', (searchTerm, locationsArray, completed) => {
+  check(completed, Match.OneOf(Boolean, null, undefined));
   check(searchTerm, Match.OneOf(String, null, undefined));
   check(locationsArray, Match.OneOf([String], null, undefined));
+  console.log("completed", completed);
 
   let query = {
     "auction.end" : {
       $gte : new Date()
+    }
+  }
+  if (completed) {
+    query = {
+      "auction.end" : {
+        $lte : new Date()
+      }
     }
   }
   if (locationsArray && locationsArray.length) {
