@@ -1,6 +1,9 @@
 @import '../base/vars';
 
 .Movies {
+  .results-length {
+    margin: 20px 0;
+  }
   .MovieSearch {
     position: relative;
     margin-bottom: 20px;

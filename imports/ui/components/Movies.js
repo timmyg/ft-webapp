@@ -8,6 +8,7 @@ class Movies extends React.Component {
     super(props);
     this.state = {
       searchTerm: null,
+      searchTerm: null,
       locations: null,
       optionsChecked1: []
     };
@@ -68,6 +69,14 @@ class Movies extends React.Component {
         </span>
       )}, this): null
 
+    let otherCheckboxes = (
+        <span key="bob">
+          <Checkbox value="bob" id="bob" onChange={this.changeEvent.bind(this)}>
+            <span className="bob label">bob</span>
+          </Checkbox>
+        </span>
+      );
+
     return (<div className="Movies">
       <Col xs={ 12 }>
         <div className="MovieSearch">
@@ -85,8 +94,11 @@ class Movies extends React.Component {
       <Col xs={ 12 } md={ 8 } className="locations">
           Filter by Locations:&nbsp;&nbsp;{ outputCheckboxes }
       </Col>
-      <Col xs={ 12 } md={ 4 } className="results-length">
-        <div className="text-right">
+      <Col xs={ 12 } md={ 8 } className="other">
+
+      </Col>
+      <Col xs={ 12 } className="results-length">
+        <div className="text-center">
           <span>
             Results: {movies.length}
           </span>
