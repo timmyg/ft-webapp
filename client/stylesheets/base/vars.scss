@@ -16,6 +16,12 @@ $locations: (
     color: white;
   }
 
+  // input[type=checkbox]:not(:checked) ~ span.label {
+  //   background: #78909C;
+  //   color: white;
+  //   border-radius: 3.5px;
+  // }
+
   // text color
   span.#{$location}:not(.label) {
     color: $color;
