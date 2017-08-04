@@ -29,6 +29,12 @@
     .alert {
       margin-top: 60px;
     }
+    .normal {
+      img {
+        max-width: 200px;
+        float: right;
+      }
+    }
   }
   .locations {
     .checkbox {
@@ -39,7 +45,6 @@
     input[type=checkbox]{
       visibility: hidden;
     }
-
     .label {
       color: inherit;
       font-size: inherit;
