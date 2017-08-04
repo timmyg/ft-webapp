@@ -4,6 +4,8 @@ $locations: (
   waycross: #8E24AA, // purp
   seymour: #2196F3, // blue
   mcmann: #FFA726, // orange
+
+  pics: #546E7A, // greyblue
 );
 
 @each $location, $color in $locations {

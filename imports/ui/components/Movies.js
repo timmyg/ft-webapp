@@ -57,6 +57,17 @@ class Movies extends React.Component {
     }, 500);
   }
 
+  handleInputChangeDynamic(event) {
+    console.log(event);
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
   render() {
     var context = this;
     const { locations, movies } = this.props;
@@ -70,9 +81,9 @@ class Movies extends React.Component {
       )}, this): null
 
     let otherCheckboxes = (
-        <span key="bob">
-          <Checkbox value="bob" id="bob" onChange={this.changeEvent.bind(this)}>
-            <span className="bob label">bob</span>
+        <span key="pics">
+          <Checkbox name="pics" value="pics" id="pics" onChange={this.handleInputChangeDynamic.bind(this)}>
+            <span className="pics label">Pictures Only</span>
           </Checkbox>
         </span>
       );
@@ -94,8 +105,8 @@ class Movies extends React.Component {
       <Col xs={ 12 } md={ 8 } className="locations">
           Filter by Locations:&nbsp;&nbsp;{ outputCheckboxes }
       </Col>
-      <Col xs={ 12 } md={ 8 } className="other">
-
+      <Col xs={ 12 } md={ 8 } className="locations">
+          Other Filters:&nbsp;&nbsp;{ otherCheckboxes }
       </Col>
       <Col xs={ 12 } className="results-length">
         <div className="text-center">
@@ -108,32 +119,39 @@ class Movies extends React.Component {
         <br/>
         { movies.length > 0 ? movies.map(({ id, msrp, link, description, additionalInfo, brand, model, specs, auction }) => (
           <Col key={ id } xs={ 12 } sm={ 6 }>
-            <Panel header={`${description}`}>
-                <Row>
-                  <Col xs={ 12 } sm={ 5 }>
-                    <Image src={ `http://d2c3kiufvhjdfg.cloudfront.net/Pics/${id}a.JPG` } alt={ id } responsive />
-                  </Col>
-                  <Col xs={ 12 } sm={ 7 }>
-                    <p><strong>location:</strong> <span className={`${ auction.location }`}>{ auction.location }</span></p>
-                    {msrp ? <p><strong>msrp:</strong> { msrp }</p> : null}
-                    <p><strong>description:</strong> { description }</p>
-                    {msrp ? <p><strong>brand:</strong> { brand }</p> : null}
-                    {msrp ? <p><strong>model:</strong> { model }</p> : null}
-                    {msrp ? <p><strong>specs:</strong> { specs }</p> : null}
-                    {description ? <p><strong>amazon:</strong> <a href={ `https://www.amazon.com/s?url=search-alias%3Daps&field-keywords=${description}` } target="_blank">amazon</a></p> : null}
-                    <p><strong>state:</strong> { additionalInfo }</p>
-                    <p><strong>ending:</strong>
-                      &nbsp;<Moment fromNow>{ auction.end }</Moment>
-                      <em>&nbsp;(<Moment format="M/DD h:mm">{ auction.end }</Moment>)</em>
-                    </p>
-                    <br/>
-                    <br/>
-                    <p>
-                      <a href={ link } target="_blank" className="pull-right btn btn-default">View</a>
-                    </p>
-                  </Col>
-                </Row>
-            </Panel>
+            { this.state.pics ?
+              <a href={ link } target="_blank">
+                <Image src={ `http://d2c3kiufvhjdfg.cloudfront.net/Pics/${id}a.JPG` } alt={ id } responsive />
+              </a>
+            : null }
+            { !this.state.pics ?
+              <Panel header={`${description}`}>
+                  <Row>
+                      <Col xs={ 12 } sm={ 5 }>
+                          <Image src={ `http://d2c3kiufvhjdfg.cloudfront.net/Pics/${id}a.JPG` } alt={ id } responsive />
+                      </Col>
+                      <Col xs={ 12 } sm={ 7 }>
+                          <p><strong>location:</strong> <span className={`${ auction.location }`}>{ auction.location }</span></p>
+                          {msrp ? <p><strong>msrp:</strong> { msrp }</p> : null}
+                          <p><strong>description:</strong> { description }</p>
+                          {msrp ? <p><strong>brand:</strong> { brand }</p> : null}
+                          {msrp ? <p><strong>model:</strong> { model }</p> : null}
+                          {msrp ? <p><strong>specs:</strong> { specs }</p> : null}
+                          {description ? <p><strong>amazon:</strong> <a href={ `https://www.amazon.com/s?url=search-alias%3Daps&field-keywords=${description}` } target="_blank">amazon</a></p> : null}
+                          <p><strong>state:</strong> { additionalInfo }</p>
+                          <p><strong>ending:</strong>
+                            &nbsp;<Moment fromNow>{ auction.end }</Moment>
+                            <em>&nbsp;(<Moment format="M/DD h:mm">{ auction.end }</Moment>)</em>
+                          </p>
+                          <br/>
+                          <br/>
+                          <p>
+                            <a href={ link } target="_blank" className="pull-right btn btn-default">View</a>
+                          </p>
+                      </Col>
+                  </Row>
+              </Panel>
+            : null }
           </Col>
         )) : <Col xs={ 10 } xsOffset={1} sm={ 6 } xsOffset={3}><Alert>Sorry. No items found for '{ this.state.searchTerm }.'</Alert></Col> }
       </div>
