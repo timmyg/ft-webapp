@@ -99,6 +99,7 @@ class Movies extends React.Component {
                     {msrp ? <p><strong>brand:</strong> { brand }</p> : null}
                     {msrp ? <p><strong>model:</strong> { model }</p> : null}
                     {msrp ? <p><strong>specs:</strong> { specs }</p> : null}
+                    {description ? <p><strong>amazon:</strong> <a href={ `https://www.amazon.com/s/?url=search-alias%3Daps&field-keywords=${description}` } target="_blank">amazon</a></p> : null}
                     <p><strong>state:</strong> { additionalInfo }</p>
                     <p><strong>ending:</strong>
                       &nbsp;<Moment fromNow>{ auction.end }</Moment>
