@@ -1,4 +1,4 @@
-$locations: (
+$brands: (
   broadwell: #00C853, // green
   school: #4DB6AC, // turquoise
   waycross: #8E24AA, // purp
@@ -7,11 +7,13 @@ $locations: (
 
   pics: #EC407A, // pink
   completed: #D32F2F, // red
+  new: #00E676, // green
+  openbox: #5D4037, // brown
 );
 
-@each $location, $color in $locations {
-  // location selection checkboxes
-  input[type=checkbox]:checked ~ span.label.#{$location} {
+@each $brand, $color in $brands {
+  // brand selection checkboxes
+  input[type=checkbox]:checked ~ span.label.#{$brand} {
     background: $color;
     color: white;
     border: 2px solid $color;
@@ -25,7 +27,7 @@ $locations: (
   }
 
   // text color
-  span.#{$location}:not(.label) {
+  span.#{$brand}:not(.label) {
     color: $color;
   }
 

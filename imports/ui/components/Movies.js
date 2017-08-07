@@ -29,15 +29,15 @@ class Movies extends React.Component {
 
   changeEvent(e) {
     console.log("changeEvent", e.target.value, e.target.checked);
-    let checkedArray = this.props.optionsChecked2.get();
+    let checkedArray = this.props.locationsChecked.get();
     let selectedValue = e.target.value;
     if (e.target.checked) {
     	checkedArray.push(selectedValue);
-      this.props.optionsChecked2.set(checkedArray);
+      this.props.locationsChecked.set(checkedArray);
     } else {
     	let valueIndex = checkedArray.indexOf(selectedValue);
 	    checkedArray.splice(valueIndex, 1);
-      this.props.optionsChecked2.set(checkedArray);
+      this.props.locationsChecked.set(checkedArray);
     }
     console.log(this);
     // TODO update subscription
@@ -54,10 +54,12 @@ class Movies extends React.Component {
     }, 500);
   }
 
-  toggleCompleted(event) {
+  togglePropsDynamic(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
-    this.props.completed.set(value);
+    let o = this.props.filters.get();
+    o[event.target.dataset.prop] = value;
+    this.props.filters.set(o);
   }
 
   handleInputChangeDynamic(event) {
@@ -85,16 +87,28 @@ class Movies extends React.Component {
 
     let otherCheckboxes = (
         <span>
+
           <span key="pics">
             <Checkbox name="pics" value="pics" id="pics" onChange={this.handleInputChangeDynamic.bind(this)}>
               <span className="pics label">Pictures Only</span>
             </Checkbox>
           </span>
           <span key="completed">
-            <Checkbox name="completed" value="completed" id="completed" onChange={this.toggleCompleted.bind(this)}>
+            <Checkbox name="completed" value="completed" id="completed" data-prop="completed" onChange={this.togglePropsDynamic.bind(this)}>
               <span className="completed label">Completed</span>
             </Checkbox>
           </span>
+          <span key="new">
+            <Checkbox name="new" value="new" id="new" data-prop="new" onChange={this.togglePropsDynamic.bind(this)}>
+              <span className="new label">Appears New</span>
+            </Checkbox>
+          </span>
+          <span key="openbox">
+            <Checkbox name="openbox" value="openbox" id="openbox" data-prop="openbox" onChange={this.togglePropsDynamic.bind(this)}>
+              <span className="openbox label">Open Box</span>
+            </Checkbox>
+          </span>
+
         </span>
       );
 
@@ -156,11 +170,11 @@ class Movies extends React.Component {
                           text={brand}
                       />
                     }</p> : null}
-                    {additionalInfo ? <p><strong>additionalInfo:</strong> {
+                    {additionalInfo ? <p><strong>condition:</strong> {
                       <TextTruncate
                           line={4}
                           truncateText="..."
-                          text={brand}
+                          text={additionalInfo}
                       />
                     }</p> : null}
                     {model ? <p><strong>model:</strong> {
@@ -184,7 +198,7 @@ class Movies extends React.Component {
               </Panel>
             : null }
           </Col>
-        )) : <Col xs={ 10 } xsOffset={1} sm={ 6 } xsOffset={3}><Alert>Sorry. No items found for '{ this.state.searchTerm }.'</Alert></Col> }
+        )) : <Col xs={ 10 } xsOffset={1} sm={ 6 } smOffset={3}><Alert>Sorry. No items found for '{ this.state.searchTerm }.'</Alert></Col> }
       </div>
     </div>);
   }
@@ -193,9 +207,8 @@ class Movies extends React.Component {
 Movies.propTypes = {
   movies: React.PropTypes.array,
   searchQuery: React.PropTypes.object,
-  completed: React.PropTypes.object,
-  locations: React.PropTypes.array,
-  optionsChecked2: React.PropTypes.object,
+  filters: React.PropTypes.object,
+  locationsChecked: React.PropTypes.object,
 };
 //
 
