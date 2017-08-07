@@ -19,48 +19,72 @@ Meteor.publish('movies.search', (searchTerm, locationsArray, filters) => {
   let isOpenBox = filters.openbox;
   let isNew = filters.new;
 
+  // let query = {
+  //   "auction.end" : {
+  //     $gte : new Date()
+  //   }
+  // }
   let query = {
-    "auction.end" : {
-      $gte : new Date()
-    }
+    "$and": []
   }
 
   if (isCompleted) {
-    query = {
+    query["$and"].push({
       "auction.end" : {
-        $lte : new Date()
+        $lt: new Date()
       }
+    })
+  } else {
+    query["$and"].push({
+      "auction.end" : {
+        $gte: new Date()
+      }
+    })
+  }
+
+  if (isOpenBox || isNew) {
+    let orQuery = { "$or": [] };
+    if (isOpenBox) {
+      const regex = new RegExp("open box", 'i');
+      orQuery["$or"].push({
+        additionalInfo: regex
+      })
     }
-  }
+    if (isNew) {
+      const regex = new RegExp("appears new", 'i');
+      orQuery["$or"].push({
+        additionalInfo: regex
+      })
+    }
+    console.log("orQuery", orQuery);
+    query["$and"].push(orQuery);
+    console.log("query", query);
 
-  if (isOpenBox) {
-    const regex = new RegExp("open box", 'i');
-    query["$or"] = regex;
-    query["additionalInfo"] = regex;
-  }
-
-  if (isNew) {
-    const regex = new RegExp("appears new", 'i');
-    query["additionalInfo"] = regex;
   }
 
   if (locationsArray && locationsArray.length) {
-    query["auction.location"] = {};
-    query["auction.location"]["$in"] = locationsArray;
+    query["$and"].push({
+      "auction.location": {
+          "$in": locationsArray
+      }
+    })
   }
 
   const projection = { limit: 10, sort: { 'auction.end': 1 } };
 
   if (searchTerm) {
     const regex = new RegExp(searchTerm, 'i');
-    query['$or'] = [
+    const orQuery = {
+      '$or': [
         { description: regex },
         { brand: regex },
         { model: regex },
         { specs: regex },
-      ];
+      ]
+    };
+    query["$and"].push(orQuery);
     projection.limit = 100;
   }
-  console.log(JSON.stringify(query));
+  console.log(JSON.stringify(query, projection));
   return Movies.find(query, projection);
 });
