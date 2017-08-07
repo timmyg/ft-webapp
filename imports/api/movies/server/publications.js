@@ -18,22 +18,22 @@ Meteor.publish('movies.search', (searchTerm, locationsArray, filters) => {
   let isCompleted = filters.completed;
   let isOpenBox = filters.openbox;
   let isNew = filters.new;
+  let projection = {
+    limit: 10,
+    sort: {
+      'auction.end': 1
+    }
+  };
+  let query = { "$and": [] }
 
-  // let query = {
-  //   "auction.end" : {
-  //     $gte : new Date()
-  //   }
-  // }
-  let query = {
-    "$and": []
-  }
-
+  /* -_-_- Completed Listings -_-_- */
   if (isCompleted) {
     query["$and"].push({
       "auction.end" : {
         $lt: new Date()
       }
     })
+    projection.sort['auction.end'] = -1
   } else {
     query["$and"].push({
       "auction.end" : {
@@ -42,6 +42,7 @@ Meteor.publish('movies.search', (searchTerm, locationsArray, filters) => {
     })
   }
 
+  /* -_-_- Condition -_-_- */
   if (isOpenBox || isNew) {
     let orQuery = { "$or": [] };
     if (isOpenBox) {
@@ -56,12 +57,10 @@ Meteor.publish('movies.search', (searchTerm, locationsArray, filters) => {
         additionalInfo: regex
       })
     }
-    console.log("orQuery", orQuery);
     query["$and"].push(orQuery);
-    console.log("query", query);
-
   }
 
+  /* -_-_- Locations -_-_- */
   if (locationsArray && locationsArray.length) {
     query["$and"].push({
       "auction.location": {
@@ -70,8 +69,7 @@ Meteor.publish('movies.search', (searchTerm, locationsArray, filters) => {
     })
   }
 
-  const projection = { limit: 10, sort: { 'auction.end': 1 } };
-
+  /* -_-_- Search Query -_-_- */
   if (searchTerm) {
     const regex = new RegExp(searchTerm, 'i');
     const orQuery = {
@@ -85,6 +83,6 @@ Meteor.publish('movies.search', (searchTerm, locationsArray, filters) => {
     query["$and"].push(orQuery);
     projection.limit = 100;
   }
-  console.log(JSON.stringify(query, projection));
+
   return Movies.find(query, projection);
 });
