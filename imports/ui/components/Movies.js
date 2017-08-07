@@ -10,7 +10,6 @@ class Movies extends React.Component {
     this.state = {
       searchTerm: null,
       locations: null,
-      optionsChecked1: []
     };
     const cxt = this;
     this.context = cxt;
@@ -34,12 +33,10 @@ class Movies extends React.Component {
     let selectedValue = e.target.value;
     if (e.target.checked) {
     	checkedArray.push(selectedValue);
-      this.setState({ optionsChecked1: checkedArray });
       this.props.optionsChecked2.set(checkedArray);
     } else {
     	let valueIndex = checkedArray.indexOf(selectedValue);
 	    checkedArray.splice(valueIndex, 1);
-      this.setState({ optionsChecked1: checkedArray });
       this.props.optionsChecked2.set(checkedArray);
     }
     console.log(this);
