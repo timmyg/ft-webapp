@@ -159,6 +159,13 @@ class Movies extends React.Component {
                           text={brand}
                       />
                     }</p> : null}
+                    {additionalInfo ? <p><strong>additionalInfo:</strong> {
+                      <TextTruncate
+                          line={4}
+                          truncateText="..."
+                          text={brand}
+                      />
+                    }</p> : null}
                     {model ? <p><strong>model:</strong> {
                       <TextTruncate
                           line={4}
@@ -166,7 +173,7 @@ class Movies extends React.Component {
                           text={model}
                       />
                     }</p> : null}
-                    {description ? <p><strong>amazon:</strong> <a href={ `https://www.amazon.com/s?url=search-alias%3Daps&field-keywords=${description}` } target="_blank">amazon</a></p> : null}
+                    {description ? <p><strong>compare:</strong> <a href={ `https://www.amazon.com/s?url=search-alias%3Daps&field-keywords=${description}` } target="_blank">amazon</a></p> : null}
                     <p><strong>ending:</strong>
                       &nbsp;<Moment fromNow>{ auction.end }</Moment>
                       <em>&nbsp;(<Moment format="M/DD h:mm a">{ auction.end }</Moment>)</em>
