@@ -141,7 +141,7 @@ class Movies extends React.Component {
       </Col>
       <div className="Movies-list pinteresty">
         <br/>
-        { movies.length > 0 ? movies.map(({ id, msrp, link, description, additionalInfo, brand, model, specs, auction }) => (
+        { movies.length > 0 ? movies.map(({ id, msrp, link, description, additionalInfo, brand, model, specs, auction, bidding }) => (
           <Col key={ id } xs={ 12 } md={ 6 } className="item">
             { this.state.pics ?
               <Panel className="img-only">
@@ -183,6 +183,22 @@ class Movies extends React.Component {
                           truncateText="..."
                           text={model}
                       />
+                    }</p> : null}
+                    {bidding.amount ? <p><strong>model:</strong> {
+                      <TextTruncate
+                          line={4}
+                          truncateText="..."
+                          text={model}
+                      />
+                    }</p> : null}
+                    {bidding.bids ? <p><strong>bids:</strong> {
+                      <span>{ bidding.bids }</span>
+                    }</p> : null}
+                    {bidding.bids ? <p><strong>current bid:</strong> {
+                      <span>${ bidding.amount }</span>
+                    }</p> : null}
+                    {bidding.bids ? <p><strong>bids updated:</strong> {
+                      <span><Moment fromNow>{ bidding.lastUpdated }</Moment></span>
                     }</p> : null}
                     {description ? <p><strong>compare:</strong> <a href={ `https://www.amazon.com/s?url=search-alias%3Daps&field-keywords=${description}` } target="_blank">amazon</a></p> : null}
                     <p><strong>ending:</strong>

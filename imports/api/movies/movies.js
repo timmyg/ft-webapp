@@ -52,6 +52,9 @@ const MoviesSchema = new SimpleSchema({
   auction: {
     type: Object,
   },
+  bidding: {
+    type: Object,
+  },
 });
 
 // const AuctionsSchema = new SimpleSchema({
