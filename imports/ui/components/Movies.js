@@ -170,13 +170,6 @@ class Movies extends React.Component {
                           text={brand}
                       />
                     }</p> : null}
-                    {additionalInfo ? <p><strong>condition:</strong> {
-                      <TextTruncate
-                          line={4}
-                          truncateText="..."
-                          text={additionalInfo}
-                      />
-                    }</p> : null}
                     {model ? <p><strong>model:</strong> {
                       <TextTruncate
                           line={4}
@@ -184,20 +177,20 @@ class Movies extends React.Component {
                           text={model}
                       />
                     }</p> : null}
-                    {bidding.amount ? <p><strong>model:</strong> {
+                    {additionalInfo ? <p><strong>condition:</strong> {
                       <TextTruncate
                           line={4}
                           truncateText="..."
-                          text={model}
+                          text={additionalInfo}
                       />
                     }</p> : null}
                     {bidding.bids ? <p><strong>bids:</strong> {
                       <span>{ bidding.bids }</span>
                     }</p> : null}
-                    {bidding.bids ? <p><strong>current bid:</strong> {
+                    {bidding.amount ? <p><strong>current bid:</strong> {
                       <span>${ bidding.amount }</span>
                     }</p> : null}
-                    {bidding.bids ? <p><strong>bids updated:</strong> {
+                    {bidding.lastUpdated ? <p><strong>bids updated:</strong> {
                       <span><Moment fromNow>{ bidding.lastUpdated }</Moment></span>
                     }</p> : null}
                     {description ? <p><strong>compare:</strong> <a href={ `https://www.amazon.com/s?url=search-alias%3Daps&field-keywords=${description}` } target="_blank">amazon</a></p> : null}
