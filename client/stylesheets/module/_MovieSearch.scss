@@ -34,6 +34,13 @@
         max-width: 200px;
         float: right;
       }
+      .panel-heading {
+        height: 60px;
+      }
+      .panel-body {
+        height: 560px;
+        overflow-y: scroll;
+      }
     }
   }
   .locations {
