@@ -188,10 +188,7 @@ class Movies extends React.Component {
                       <span>{ bidding.bids }</span>
                     }</p> : null}
                     {bidding && bidding.amount ? <p><strong>current bid:</strong> {
-                      <span>${ bidding.amount }</span>
-                    }</p> : null}
-                    {bidding && bidding.lastUpdated ? <p><strong>bids updated:</strong> {
-                      <span><Moment fromNow>{ bidding.lastUpdated }</Moment></span>
+                      <span>${ bidding.amount }</span><em>(<Moment fromNow>{ bidding.lastUpdated }</Moment>)</em>
                     }</p> : null}
                     {description ? <p><strong>compare:</strong> <a href={ `https://www.amazon.com/s?url=search-alias%3Daps&field-keywords=${description}` } target="_blank">amazon</a></p> : null}
                     <p><strong>ending:</strong>
