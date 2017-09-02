@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { Row, Col, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
+import { Row, Col, FormGroup, ControlLabel, FormControl, Button, InputGroup } from 'react-bootstrap';
 import handleLogin from '../../modules/login';
 
 export default class Login extends React.Component {
@@ -16,7 +16,7 @@ export default class Login extends React.Component {
     return (
       <div className="Login">
         <Row>
-          <Col xs={ 12 } sm={ 6 } md={ 4 }>
+          <Col xs={ 12 } sm={ 6 } md={ 4 } smOffset={3} mdOffset={4}>
             <h4 className="page-header">Login</h4>
             <form
               ref={ form => (this.loginForm = form) }
@@ -45,6 +45,7 @@ export default class Login extends React.Component {
                 />
               </FormGroup>
               <Button type="submit" bsStyle="success">Login</Button>
+              <Link to="/signup" className="pull-right">Signup</Link>
             </form>
           </Col>
         </Row>

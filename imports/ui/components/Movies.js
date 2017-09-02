@@ -126,10 +126,10 @@ class Movies extends React.Component {
           <i className="fa fa-close right hand" onClick={this.clearBox.bind(this)}/>
         </div>
       </Col>
-      <Col xs={ 12 } md={ 8 } className="locations">
+      <Col xs={ 12 } md={ 12 } className="filters locations">
           Filter by Locations:&nbsp;&nbsp;{ outputCheckboxes }
       </Col>
-      <Col xs={ 12 } md={ 8 } className="locations">
+      <Col xs={ 12 } md={ 12 } className="filters other">
           Other Filters:&nbsp;&nbsp;{ otherCheckboxes }
       </Col>
       <Col xs={ 12 } className="results-length">

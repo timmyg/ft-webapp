@@ -20,7 +20,7 @@ const getUserData = () => ({
 
 const signup = () => {
   const user = getUserData();
-
+  console.log("user", user);
   Accounts.createUser(user, (error) => {
     if (error) {
       Bert.alert(error.reason, 'danger');

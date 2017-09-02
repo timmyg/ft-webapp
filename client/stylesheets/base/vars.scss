@@ -1,14 +1,14 @@
 $brands: (
-  broadwell: #00C853, // green
-  school: #4DB6AC, // turquoise
-  waycross: #8E24AA, // purp
-  seymour: #2196F3, // blue
-  mcmann: #FFA726, // orange
+  broadwell: #00C853,
+  school: #4DB6AC,
+  waycross: #8E24AA,
+  seymour: #2196F3,
+  mcmann: #FFA726,
 
-  pics: #EC407A, // pink
-  completed: #D32F2F, // red
-  new: #00E676, // green
-  openbox: #5D4037, // brown
+  pics: #EC407A,
+  completed: #D32F2F,
+  new: #00E676,
+  openbox: #5D4037,
 );
 
 @each $brand, $color in $brands {
@@ -30,5 +30,10 @@ $brands: (
   span.#{$brand}:not(.label) {
     color: $color;
   }
+}
 
+// default
+input[type=checkbox]:checked ~ span.label {
+  background: lightgrey;
+  border: 2px solid lightgrey;
 }

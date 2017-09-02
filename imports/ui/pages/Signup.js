@@ -16,7 +16,7 @@ export default class Signup extends React.Component {
     return (
       <div className="Signup">
         <Row>
-          <Col xs={ 12 } sm={ 6 } md={ 4 }>
+          <Col xs={ 12 } sm={ 6 } md={ 4 } smOffset={3} mdOffset={4}>
             <h4 className="page-header">Sign Up</h4>
             <form
               ref={ form => (this.signupForm = form) }
@@ -64,9 +64,10 @@ export default class Signup extends React.Component {
                   placeholder="Password"
                 />
               </FormGroup>
-              <Button type="submit" bsStyle="success">Sign Up</Button>
+              <div className="text-center">
+                <Button type="submit" bsStyle="success" className="pull-right">Sign Up</Button>
+              </div>
             </form>
-            <p>Already have an account? <Link to="/login">Log In</Link>.</p>
           </Col>
         </Row>
       </div>
