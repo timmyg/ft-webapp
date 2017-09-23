@@ -47,14 +47,12 @@ class Movies extends React.Component {
   handleSearch(event) {
     console.log("handleSearch");
     event.preventDefault();
-    // clearTimeout(typingTimeout);
-    let context = this;
-    const searchTerm = $(event.target).find("input").val()
-    // typingTimeout = setTimeout(function () {
-    context.setState({ searchTerm: searchTerm });
-    context.props.searchQuery.set(searchTerm);
-    // }, 500);
-    console.log("cool");
+    const $input = $(event.target).find("input")
+    const searchTerm = $input.val()
+    this.setState({ searchTerm: searchTerm });
+    this.props.searchQuery.set(searchTerm);
+    // hide keyboard on mobile
+    $input.blur()
     return false;
   }
 
