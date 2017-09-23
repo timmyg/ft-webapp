@@ -45,13 +45,17 @@ class Movies extends React.Component {
   }
 
   handleSearch(event) {
-    clearTimeout(typingTimeout);
+    console.log("handleSearch");
+    event.preventDefault();
+    // clearTimeout(typingTimeout);
     let context = this;
-    const searchTerm = event.target.value;
-    typingTimeout = setTimeout(function () {
-      context.setState({ searchTerm: searchTerm });
-      context.props.searchQuery.set(searchTerm);
-    }, 500);
+    const searchTerm = $(event.target).find("input").val()
+    // typingTimeout = setTimeout(function () {
+    context.setState({ searchTerm: searchTerm });
+    context.props.searchQuery.set(searchTerm);
+    // }, 500);
+    console.log("cool");
+    return false;
   }
 
   togglePropsDynamic(event) {
@@ -114,17 +118,18 @@ class Movies extends React.Component {
 
     return (<div className="Movies">
       <Col xs={ 12 }>
-        <div className="MovieSearch">
-          <i className="fa fa-search left" />
-          <FormControl
-            id="search"
-            type="search"
-            onKeyUp={ this.handleSearch }
-            placeholder="Search"
-            className="Search"
-          />
-          <i className="fa fa-close right hand" onClick={this.clearBox.bind(this)}/>
-        </div>
+        <form onSubmit={ this.handleSearch }>
+          <div className="MovieSearch">
+            <i className="fa fa-search left" />
+            <FormControl
+              id="search"
+              type="search"
+              placeholder="Search"
+              className="Search"
+            />
+            <i className="fa fa-close right hand" onClick={this.clearBox.bind(this)}/>
+          </div>
+        </form>
       </Col>
       <Col xs={ 12 } md={ 12 } className="filters locations">
           Filter by Locations:&nbsp;&nbsp;{ outputCheckboxes }
