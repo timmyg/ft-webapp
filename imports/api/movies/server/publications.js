@@ -5,8 +5,8 @@ import { check, Match } from 'meteor/check';
 import { Movies } from '../movies.js';
 import _ from 'underscore';
 
-Meteor.publish('movies.search', (searchTerm, locationsArray, filters) => {
-  console.log("filters", filters);
+Meteor.publish('movies.search', (searchTerm, locationsArray, filters, pageOffset) => {
+  console.log("pageOffset", pageOffset);
 
   check(filters, Match.ObjectIncluding({}));
   check(filters.completed, Match.OneOf(Boolean, null, undefined));
@@ -14,6 +14,7 @@ Meteor.publish('movies.search', (searchTerm, locationsArray, filters) => {
   check(filters.openbox, Match.OneOf(Boolean, null, undefined));
   check(searchTerm, Match.OneOf(String, null, undefined));
   check(locationsArray, Match.OneOf([String], null, undefined));
+  check(pageOffset, Match.OneOf(Number));
 
   let isCompleted = filters.completed;
   let isOpenBox = filters.openbox;
@@ -83,6 +84,13 @@ Meteor.publish('movies.search', (searchTerm, locationsArray, filters) => {
     query["$and"].push(orQuery);
     projection.limit = 100;
   }
+
+  /* -_-_- Paging -_-_- */
+  if (pageOffset) {
+    projection.skip = pageOffset * projection.limit;
+  }
+
+  console.log(query, projection);
 
   return Movies.find(query, projection);
 });

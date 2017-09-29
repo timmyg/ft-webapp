@@ -15,6 +15,7 @@ class Movies extends React.Component {
     this.context = cxt;
     this.handleSearch = this.handleSearch.bind(this);
     this.clearBox = this.clearBox.bind(this);
+    this.nextPage = this.nextPage.bind(this);
 
     Meteor.call('getLocations', function(err, locationsArray) {
       cxt.setState({locations: locationsArray});
@@ -25,6 +26,13 @@ class Movies extends React.Component {
     this.setState({ searchTerm: "" });
     this.props.searchQuery.set("");
     document.getElementById("search").value = "";
+  }
+
+  nextPage(e) {
+    console.log(this.props);
+    let currentPageOffset = this.props.pageOffset.get();
+    console.log("nextpage", currentPageOffset);
+    this.props.pageOffset.set(++currentPageOffset);
   }
 
   changeEvent(e) {
@@ -78,6 +86,23 @@ class Movies extends React.Component {
   render() {
     var context = this;
     const { locations, movies } = this.props;
+    // // this.props.pageOffset
+    // let pagingButtons = (
+    //   <div>
+    //       { this.props.pageOffset > 0 ?
+    //         <button className="btn btn-default" onClick={this.nextPage.bind(this)}>Last Page</button>
+    //       : null }
+    //       <button className="btn btn-default" onClick={this.nextPage.bind(this)}>Next Page</button>
+    //   </div>
+    // )
+
+    let pagingButtons = (
+      <div>
+        <button className="btn btn-default" onClick={this.nextPage.bind(this)}>Last Page</button>
+        <button className="btn btn-default" onClick={this.nextPage.bind(this)}>Next Page</button>
+      </div>
+    )
+
     let outputCheckboxes = this.state.locations && this.state.locations.length > 0 ? this.state.locations.map(function(name, i){
       return (
         <span key={ name }>
@@ -211,6 +236,11 @@ class Movies extends React.Component {
           </Col>
         )) : <Col xs={ 10 } xsOffset={1} sm={ 6 } smOffset={3}><Alert>Sorry. No items found for '{ this.state.searchTerm }.'</Alert></Col> }
       </div>
+      <Col xs={ 12 } className="paging">
+        <div className="text-center">
+          { pagingButtons }
+        </div>
+      </Col>
     </div>);
   }
 }
@@ -220,6 +250,7 @@ Movies.propTypes = {
   searchQuery: React.PropTypes.object,
   filters: React.PropTypes.object,
   locationsChecked: React.PropTypes.object,
+  pageOffset: React.PropTypes.object,
 };
 //
 
