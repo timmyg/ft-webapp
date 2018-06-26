@@ -1,1 +1,1 @@
-meteor run
+web: meteor run
