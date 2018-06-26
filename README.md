@@ -1,5 +1,5 @@
 #### Tutorial: Simple Search with React
-
+ 
 undefined
 
 [Read this tutorial on The Meteor Chef](https://themeteorchef.com/tutorials/simple-search-with-react)  
